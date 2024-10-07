@@ -5,16 +5,26 @@
   type="number"
   (input)="onSizeInput(nInput)">
 
+  <!-- Grid container gets column first because  -->
   <div class="grid-container">
-    <div *ngFor="let row of grid; let rowIndex = index; trackBy: trackByRowIndex">
-      <div *ngFor="let cell of row; let colIndex = index; trackBy: trackByCellIndex"
+    @for (col of grid; let colIndex = $index; track trackByColIndex) {
+      @for (cell of col; let rowIndex = $index; track trackByCellIndex) {
+        <!-- <div tabindex="0"
+          [attr.data-row]="rowIndex"
+          [attr.data-col]="colIndex"
+          (keydown)="onKeydown($event, rowIndex, colIndex)"> </div> -->
+         <div> <app-grid-cell id="row-{{ rowIndex }}-col-{{ colIndex }}" [gridCell]="cell"></app-grid-cell> </div>
+      }
+    }
+      <!-- <div *ngFor="let col of grid; let colIndex = index; trackBy: trackByColIndex">
+      <div *ngFor="let cell of col; let rowIndex = index; trackBy: trackByCellIndex"
       tabindex="0"
       [attr.data-row]="rowIndex"
       [attr.data-col]="colIndex"
-      (keydown)="onKeydown($event, rowIndex, colIndex)">
-        <app-grid-cell [gridCell]="cell"></app-grid-cell>
+      (keydown)="onKeydown($event, rowIndex, colIndex)"> -->
+        <!-- <app-grid-cell id="row-{{ rowIndex }}-col-{{ colIndex }}" [gridCell]="cell"></app-grid-cell> -->
       </div>
-    </div>
-  </div>
+
+
 
 

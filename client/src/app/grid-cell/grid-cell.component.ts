@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -44,7 +44,7 @@ export class GridCellComponent {
 
   @Input({ required: true }) gridCell: GridCell;
 
-  constructor() {
+  constructor(private elRef: ElementRef) {
     if (!this.gridCell) {
       this.gridCell = new GridCell;
     }
@@ -92,5 +92,10 @@ export class GridCellComponent {
       }
     }
   }
+
+getElementRef(): ElementRef {
+  return this.elRef;
+}
+
 
 }

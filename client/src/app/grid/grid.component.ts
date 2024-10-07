@@ -51,6 +51,7 @@ export class GridComponent {
 
   constructor() {
     this.initializeGrid();
+    console.log(this.grid);
   }
 
   // defaultGridCell(): GridCell {
@@ -62,9 +63,7 @@ export class GridComponent {
   // }
 
   onSizeInput(nInput: number) {
-    console.log(this.n);
       this.n = nInput;
-    console.log(this.n);
     this.initializeGrid();
   }
 
@@ -79,7 +78,7 @@ export class GridComponent {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  trackByRowIndex(index: number, _item: GridCell[]): number {
+  trackByColIndex(index: number, _item: GridCell[]): number {
     return index;
   }
 
@@ -89,6 +88,7 @@ export class GridComponent {
   }
 
   onKeydown(event: KeyboardEvent, rowIndex: number, colIndex: number) {
+    console.log("Before processing event: (" + rowIndex + ", " + colIndex + ")");
     if (!event.ctrlKey) {
       switch (event.key) {
           case 'ArrowUp':
@@ -105,6 +105,18 @@ export class GridComponent {
             break;
         }
       }
+    console.log("After processing event: (" + rowIndex + ", " + colIndex + ")");
   }
+
+    moveFocus(rowIndex: number, colIndex: number) {
+    // this.inputFocused = true;
+    // focus()
+      // this.grid[rowIndex][colIndex].getElementRef().nativeElement.focus();
+    console.log("should move to: " + rowIndex + ", " + colIndex)
+
+    throw new Error('Method not implemented.');
+  }
+
+
 
 }
