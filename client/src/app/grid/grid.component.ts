@@ -85,6 +85,29 @@ export class GridComponent {
     this.moveFocus(rowIndex, colIndex);
   }
 
+// BOLDING CELLS WALLS DEPENDING ON POSITION
+  // onCrtlKeyDown(event: KeyboardEvent, colIndex: number, rowIndex: number) {
+  //   if (event.ctrlKey) {
+  //     event.preventDefault();
+  //     switch (event.key) {
+  //       case 'ArrowUp':
+  //         this.(rowIndex, colIndex - 1).setBoldBottom()
+  //         break;
+  //       case 'ArrowRight':
+  //         this.(rowIndex + 1, colIndex).setBoldLeft()
+  //         break;
+  //       case 'ArrowDown':
+  //         this.(rowIndex, colIndex + 1).setBoldTop()
+  //         break;
+  //       case 'ArrowLeft':
+  //         this.(rowIndex - 1, colIndex).setBoldRight()
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //     }
+  //   }
+
   onKeydown(event: KeyboardEvent, colIndex: number, rowIndex: number) {
     if (!event.ctrlKey) {
       switch (event.key) {
@@ -103,6 +126,7 @@ export class GridComponent {
         }
       }
   }
+
   moveFocus(col: number, row: number) {
     if (col >= 0 && col < this.grid.length && row >= 0 && row < this.grid[col].length) {
       this.currentCol = col;

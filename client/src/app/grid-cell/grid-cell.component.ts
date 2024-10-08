@@ -71,6 +71,39 @@ export class GridCellComponent {
     this.gridCell.editable = state;
   }
 
+  // FUNCTIONS FOR BOLDING EDGES, COULD MAKE THIS SIMPLER AND COMBINE true/false CASES (4 Functions instead of 8)
+  // setBoldTop() {
+  //   this.gridCell.edges.top = true;
+  // }
+
+  // setBoldBottom() {
+  //   this.gridCell.edges.bottom = true;
+  // }
+
+  // setBoldRight() {
+  //   this.gridCell.edges.right = true;
+  // }
+
+  // setBoldLeft() {
+  //   this.gridCell.edges.left = true;
+  // }
+
+  // unsetBoldTop() {
+  //   this.gridCell.edges.top = false;
+  // }
+
+  // unsetBoldBottom() {
+  //   this.gridCell.edges.bottom = false;
+  // }
+
+  // unsetBoldRight() {
+  //   this.gridCell.edges.right = false;
+  // }
+
+  // unsetBoldLeft() {
+  //   this.gridCell.edges.left = false;
+  // }
+
   onKeyDown(event: KeyboardEvent) {
     if (this.gridCell.editable && event.ctrlKey) {
       event.preventDefault();
@@ -93,3 +126,4 @@ export class GridCellComponent {
     }
   }
 }
+
