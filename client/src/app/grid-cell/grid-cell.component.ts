@@ -71,54 +71,37 @@ export class GridCellComponent {
     this.gridCell.editable = state;
   }
 
-  // FUNCTIONS FOR BOLDING EDGES, COULD MAKE THIS SIMPLER AND COMBINE true/false CASES (4 Functions instead of 8)
-  // setBoldTop() {
-  //   this.gridCell.edges.top = true;
-  // }
+  toggleTopEdge() {
+    this.gridCell.edges.top = !this.gridCell.edges.top;
+  }
 
-  // setBoldBottom() {
-  //   this.gridCell.edges.bottom = true;
-  // }
+  toggleRightEdge() {
+    this.gridCell.edges.right = !this.gridCell.edges.right;
+  }
 
-  // setBoldRight() {
-  //   this.gridCell.edges.right = true;
-  // }
+  toggleBottomEdge() {
+    this.gridCell.edges.bottom = !this.gridCell.edges.bottom;
+  }
 
-  // setBoldLeft() {
-  //   this.gridCell.edges.left = true;
-  // }
-
-  // unsetBoldTop() {
-  //   this.gridCell.edges.top = false;
-  // }
-
-  // unsetBoldBottom() {
-  //   this.gridCell.edges.bottom = false;
-  // }
-
-  // unsetBoldRight() {
-  //   this.gridCell.edges.right = false;
-  // }
-
-  // unsetBoldLeft() {
-  //   this.gridCell.edges.left = false;
-  // }
+  toggleLeftEdge() {
+    this.gridCell.edges.left = !this.gridCell.edges.left;
+  }
 
   onKeyDown(event: KeyboardEvent) {
     if (this.gridCell.editable && event.ctrlKey) {
       event.preventDefault();
       switch (event.key) {
         case 'ArrowUp':
-          this.gridCell.edges.top = !this.gridCell.edges.top; //gridCell instead of just edges
+          this.toggleTopEdge();
           break;
         case 'ArrowRight':
-          this.gridCell.edges.right = !this.gridCell.edges.right;
+          this.toggleRightEdge();
           break;
         case 'ArrowDown':
-          this.gridCell.edges.bottom = !this.gridCell.edges.bottom;
+          this.toggleBottomEdge();
           break;
         case 'ArrowLeft':
-          this.gridCell.edges.left = !this.gridCell.edges.left;
+          this.toggleLeftEdge();
           break;
         default:
           break;
