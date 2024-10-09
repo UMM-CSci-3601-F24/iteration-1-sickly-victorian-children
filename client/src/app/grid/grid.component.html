@@ -1,4 +1,4 @@
-<!-- <p>grid works!</p> -->
+
 
 <input matInput
   [(ngModel)]="n"
@@ -15,14 +15,18 @@
             [gridCell]= ""
             (keydown)= "onKeydown($event, currentRow, currentCol)"
             (click)="onClick($event, rowIndex, colIndex)"
-            [attr.data-row]="rowIndex"
-            [attr.data-col]="colIndex"
+            [attr.data-col]="rowIndex"
+            [attr.data-row]="colIndex"
             ></app-grid-cell>
           </mat-grid-tile>
         }
       }
     </mat-grid-list>
   </div>
+
+<button mat-button (click)="cycleTypingDirection()">Cycle Typing Direction</button>
+<p>Current Typing Direction is {{typeDirection}}</p>
+
 
 
 

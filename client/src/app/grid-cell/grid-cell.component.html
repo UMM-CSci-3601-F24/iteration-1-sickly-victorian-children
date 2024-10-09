@@ -16,7 +16,7 @@
     maxlength="1"
     (input)="onInput(gridCell.value)"
     (keydown)="onKeyDown($event)"
-    placeholder="">
+    placeholder="{{gridCell.value}}">
 }
     @else {
 <div class="cell-content">{{ gridCell.value }}</div>

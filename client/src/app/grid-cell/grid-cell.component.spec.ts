@@ -62,6 +62,16 @@ describe('GridCellComponent', () => {
     expect(inputElement).toBeNull();
   });
 
+  it('should disallow invalid input into the cell', () => {
+    const fixture = TestBed.createComponent(GridCellComponent);
+    const component = fixture.componentInstance;
+
+    component.setEditable(true);
+    fixture.detectChanges();
+    component.onInput("/");
+    expect(component.gridCell.value).toBe('');
+  });
+
   it('should apply correct SCSS style class for bolded edges', () => {
     const fixture = TestBed.createComponent(GridCellComponent);
     const component = fixture.componentInstance;
@@ -76,6 +86,32 @@ describe('GridCellComponent', () => {
     expect(cellElement.classList).not.toContain('bold-right');
     expect(cellElement.classList).toContain('bold-bottom');
     expect(cellElement.classList).toContain('bold-left');
+  });
+
+  it('should not toggle any edges on key down with Ctrl when an unhandled key is pressed', () => {
+    const fixture = TestBed.createComponent(GridCellComponent);
+    const component = fixture.componentInstance;
+    const edges = { top: false, right: false, bottom: false, left: false };
+    component.setEdges(edges);
+    component.setEditable(true);
+    fixture.detectChanges();
+
+    const inputElement: HTMLInputElement = fixture.nativeElement.querySelector('input');
+    inputElement.focus();
+    fixture.detectChanges();
+
+    expect(document.activeElement).toBe(inputElement);
+
+    const event = new KeyboardEvent('keydown', { key: 'A', ctrlKey: true });
+    spyOn(event, 'preventDefault');
+    inputElement.dispatchEvent(event);
+    fixture.detectChanges();
+
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(component.gridCell.edges.top).toBeFalse();
+    expect(component.gridCell.edges.right).toBeFalse();
+    expect(component.gridCell.edges.bottom).toBeFalse();
+    expect(component.gridCell.edges.left).toBeFalse();
   });
 
   it('should bold edges based on input', () => {
