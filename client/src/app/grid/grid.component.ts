@@ -26,6 +26,8 @@ import { GridCellComponent } from '../grid-cell/grid-cell.component';
 export class GridComponent {
 
   n: number = 10;
+  m: number = 40;
+
   grid: GridCell[][] = [];
   currentRow: number = 0;
   currentCol: number = 0;
@@ -78,23 +80,18 @@ export class GridComponent {
             break;
           case 'Backspace':
             if (inputElement) {
-              // this.renderer.setProperty(inputElement, 'value', '');
               cell.value = '';
             }
             if (this.typeDirection === "right") {
-              // setTimeout(() => this.moveFocus(col - 1, row), 0);
               this.moveFocus(col - 1, row)
             }
             if (this.typeDirection === "left") {
-              // setTimeout(() => this.moveFocus(col + 1, row), 0);
               this.moveFocus(col + 1, row)
             }
             if (this.typeDirection === "up") {
-              // setTimeout(() => this.moveFocus(col, row + 1), 0);
               this.moveFocus(col, row + 1)
             }
             if (this.typeDirection === "down") {
-              // setTimeout(() => this.moveFocus(col, row - 1), 0);
               this.moveFocus(col, row - 1)
             }
             break;
@@ -103,27 +100,18 @@ export class GridComponent {
               console.log('old cell value = ', cell.value);
               cell.value = event.key;
               console.log('new cell value = ', cell.value);
-              // if (inputElement) {
-              //   // this.renderer.setProperty(inputElement, 'value', event.key);
-              //   console.log(cell, ' at ', col, row);
-              //   cell.value = event.key;
-              // }
               if (this.typeDirection === "right") {
-                // setTimeout(() => this.moveFocus(col + 1, row), 0);
                 console.log('moving focus to ', col + 1, row);
                 this.moveFocus(col + 1, row)
               }
               if (this.typeDirection === "left") {
-                // setTimeout(() => this.moveFocus(col - 1, row), 0);
                 this.moveFocus(col - 1, row)
               }
               if (this.typeDirection === "up") {
-                // setTimeout(() => this.moveFocus(col, row - 1), 0);
                 this.moveFocus(col, row - 1)
 
               }
               if (this.typeDirection === "down") {
-                // setTimeout(() => this.moveFocus(col, row + 1), 0);
                 this.moveFocus(col, row + 1)
               }
             }

@@ -5,7 +5,12 @@
   type="number"
   (input)="onSizeInput()"
   placeholder="{{n}}">
-  <div [ngStyle]="{'height': (n * 40) + 'px', 'width': (n * 40) + 'px'}"  >
+  <input matInput
+  [(ngModel)]="m"
+  type="number"
+  placeholder="{{m}}">
+
+  <div [ngStyle]="{'height': (n * m) + 'px', 'width': (n * m) + 'px'}"  >
     <mat-grid-list cols="{{n}}" rowHeight="1:1" gutterSize="0">
       @for (col of grid; track col; let colIndex = $index) {
         @for (cell of col; track cell; ; let rowIndex = $index) {
@@ -17,6 +22,7 @@
             (click)="onClick($event, rowIndex, colIndex)"
             [attr.data-col]="rowIndex"
             [attr.data-row]="colIndex"
+            [ngStyle]="{'height': m + 'px', 'width': m + 'px'}"
             ></app-grid-cell>
           </mat-grid-tile>
         }

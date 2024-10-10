@@ -1,7 +1,7 @@
 .grid-container {
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(40px, 0fr));
-  grid-gap:0px;
+  grid-gap:100px;
 }
 
 // .grid-list-container {
