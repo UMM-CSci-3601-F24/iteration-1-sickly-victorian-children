@@ -34,6 +34,7 @@ export class GridComponent {
   typeDirection: string = "right";
   typingDirections: string[] = ["right", "left", "up", "down"];
   currentDirectionIndex: number = 0;
+  private focusTimeout: ReturnType<typeof setTimeout>;
 
   constructor(private renderer: Renderer2, public elRef: ElementRef) {
     this.initializeGrid();
@@ -64,6 +65,12 @@ export class GridComponent {
 
     console.log('keydown', event.key, col, row);
 
+    if (this.focusTimeout) {
+      clearTimeout(this.focusTimeout);
+    }
+
+
+    this.focusTimeout = setTimeout(() => {
     if (!event.ctrlKey) {
       switch (event.key) {
           case 'ArrowUp':
@@ -125,10 +132,10 @@ export class GridComponent {
               this.renderer.setProperty(inputElement, 'value', '');
               setTimeout(() => this.moveFocus(col, row), 0);
               console.log(inputElement.value);
-
             }
         }
       }
+    }, );
   }
   moveFocus(col: number, row: number) {
     if (col >= 0 && col < this.grid.length && row >= 0 && row < this.grid[col].length) {
