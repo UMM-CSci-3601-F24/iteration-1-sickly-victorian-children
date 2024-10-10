@@ -6,6 +6,7 @@ export class GridCell {
   edges: Edges = { top: false, right: false, bottom: false, left: false };
   // Each boolean coresponds to an edge, true means it is bolded.
 
+
   toggleTopEdge() {
     this.edges.top = !this.edges.top;
   }

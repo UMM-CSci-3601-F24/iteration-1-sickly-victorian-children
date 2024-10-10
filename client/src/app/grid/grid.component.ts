@@ -59,33 +59,29 @@ export class GridComponent {
       for(let row=0; row<this.n; ++row) {
         this.grid.push([]);
         for(let col=0; col<this.n; ++col) {
-          this.grid[row].push(new GridCell());
+          this.grid[row].push(new GridCell);
     }
    }
   }
 
-
-
-  boldAdjacent(event: KeyboardEvent, col: number, row: number)  {
-    if (event.ctrlKey) {
-      switch (event.key) {
-          case 'ArrowUp':
-            this.grid[col - 1][row].toggleLeftEdge();
-            break;
-          case 'ArrowDown':
-            this.grid[col - 1][row].toggleLeftEdge();
-            break;
-          case 'ArrowLeft':
-            this.grid[col - 1][row].toggleLeftEdge();
-            break;
-          case 'ArrowRight':
-            this.grid[col - 1][row].toggleLeftEdge();
-            break;
-            default:
-            break;
-  }
+  boldAdjacent(edge: string, col: number, row: number)  {
+    switch(edge) {
+      // case 'top':
+      //   this.grid[col - 1][row].toggleLeftEdge();
+      //   break;
+      // case 'bottom':
+      //   this.grid[col - 1][row].toggleLeftEdge();
+      //   break;
+      // case 'left':
+      //   this.grid[col - 1][row].toggleLeftEdge();
+      //   break;
+      case 'right':
+        this.grid[col + 1][row].toggleLeftEdge();
+        console.log(this.grid[col + 1][row]);
+        break;
+      }
     }
-  }
+
 
   /**
    * Handles the click event on a grid cell.
@@ -178,6 +174,9 @@ export class GridComponent {
               this.renderer.setProperty(inputElement, 'value', '');
               setTimeout(() => this.moveFocus(col, row), 0);
               console.log(inputElement.value);
+            }
+            case 'ArrowRight': {
+              this.boldAdjacent('right', col, row)
             }
         }
       }
