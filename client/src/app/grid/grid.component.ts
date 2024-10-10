@@ -31,8 +31,8 @@ export class GridComponent {
   grid: GridCell[][] = [];
   currentRow: number = 0;
   currentCol: number = 0;
-  typeDirection: string = "right";
-  typingDirections: string[] = ["right", "left", "up", "down"];
+  typeDirection: string = "right"; // Current direction
+  typingDirections: string[] = ["right", "left", "up", "down"]; // Possible Directions
   currentDirectionIndex: number = 0;
   private focusTimeout: ReturnType<typeof setTimeout>;
 
@@ -40,11 +40,20 @@ export class GridComponent {
     this.initializeGrid();
   }
 
+
+  /**
+   * Handles the input size change event.
+   * Reinitializes the grid based on the new size.
+   */
   onSizeInput() {
     console.log(this.n);
     this.initializeGrid();
   }
 
+  /**
+   * Handles the input size change event.
+   * Reinitializes the grid based on the new size.
+   */
   initializeGrid() {
     this.grid=[];
       for(let row=0; row<this.n; ++row) {
@@ -55,11 +64,28 @@ export class GridComponent {
    }
   }
 
+  /**
+   * Handles the click event on a grid cell.
+   * Moves the focus to the clicked cell.
+   *
+   * @param event - The mouse event.
+   * @param col - The column index of the clicked cell.
+   * @param row - The row index of the clicked cell.
+   */
+
   onClick(event: MouseEvent, col: number, row: number) {
     this.moveFocus(col, row);
   }
 
-  onKeydown(event: KeyboardEvent, row: number, col: number) {
+  /**
+   * Handles the keydown event on a grid cell.
+   * Moves the focus or modifies the cell value based on the key pressed.
+   *
+   * @param event - The keyboard event.
+   * @param col - The column index of the focused cell.
+   * @param row - The row index of the focused cell.
+   */
+  onKeydown(event: KeyboardEvent, col: number, row: number) {
     const cell = this.grid[col][row];
     const inputElement = this.elRef.nativeElement.querySelector(`app-grid-cell[data-col="${col}"][data-row="${row}"] input`);
 
@@ -69,8 +95,7 @@ export class GridComponent {
       clearTimeout(this.focusTimeout);
     }
 
-
-    this.focusTimeout = setTimeout(() => {
+    this.focusTimeout = setTimeout(() => { // Look into debounce, probably a better solution than timeout
     if (!event.ctrlKey) {
       switch (event.key) {
           case 'ArrowUp':
@@ -116,7 +141,6 @@ export class GridComponent {
               }
               if (this.typeDirection === "up") {
                 this.moveFocus(col, row - 1)
-
               }
               if (this.typeDirection === "down") {
                 this.moveFocus(col, row + 1)
@@ -137,6 +161,13 @@ export class GridComponent {
       }
     }, );
   }
+
+  /**
+   * Moves the focus to the specified cell.
+   *
+   * @param col - The column index of the target cell.
+   * @param row - The row index of the target cell.
+   */
   moveFocus(col: number, row: number) {
     if (col >= 0 && col < this.grid.length && row >= 0 && row < this.grid[col].length) {
       this.currentCol = col;
@@ -153,6 +184,10 @@ export class GridComponent {
     }
   }
 
+  /**
+   * Cycles through the typing directions.
+   * Updates the current typing direction.
+   */
   cycleTypingDirection() {
     this.currentDirectionIndex = (this.currentDirectionIndex + 1) % this.typingDirections.length;
     this.typeDirection = this.typingDirections[this.currentDirectionIndex];
