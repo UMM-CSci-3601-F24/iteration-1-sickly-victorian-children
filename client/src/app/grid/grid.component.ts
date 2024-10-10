@@ -26,12 +26,15 @@ import { GridCellComponent } from '../grid-cell/grid-cell.component';
 export class GridComponent {
 
   n: number = 10;
+  m: number = 40;
+
   grid: GridCell[][] = [];
   currentRow: number = 0;
   currentCol: number = 0;
   typeDirection: string = "right"; // Current direction
   typingDirections: string[] = ["right", "left", "up", "down"]; // Possible Directions
   currentDirectionIndex: number = 0;
+  private focusTimeout: ReturnType<typeof setTimeout>;
 
   constructor(private renderer: Renderer2, public elRef: ElementRef) {
     this.initializeGrid();
@@ -88,6 +91,11 @@ export class GridComponent {
 
     console.log('keydown', event.key, col, row);
 
+    if (this.focusTimeout) {
+      clearTimeout(this.focusTimeout);
+    }
+
+    this.focusTimeout = setTimeout(() => { // Look into debounce, probably a better solution than timeout
     if (!event.ctrlKey) {
       switch (event.key) {
           case 'ArrowUp':
@@ -151,6 +159,7 @@ export class GridComponent {
             }
         }
       }
+    }, );
   }
 
   /**
