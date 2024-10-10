@@ -32,7 +32,7 @@ export class GridComponent {
   typeDirection: string = "right";
   typingDirections: string[] = ["right", "left", "up", "down"];
   currentDirectionIndex: number = 0;
-  private focusTimeout: any;
+  private focusTimeout: ReturnType<typeof setTimeout>;
 
   constructor(private renderer: Renderer2, public elRef: ElementRef) {
     this.initializeGrid();
@@ -147,7 +147,7 @@ export class GridComponent {
             }
         }
       }
-    }, 5);
+    }, );
   }
   moveFocus(col: number, row: number) {
     if (col >= 0 && col < this.grid.length && row >= 0 && row < this.grid[col].length) {
