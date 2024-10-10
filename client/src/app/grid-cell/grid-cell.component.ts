@@ -71,37 +71,21 @@ export class GridCellComponent {
     this.gridCell.editable = state;
   }
 
-  toggleTopEdge() {
-    this.gridCell.edges.top = !this.gridCell.edges.top;
-  }
-
-  toggleRightEdge() {
-    this.gridCell.edges.right = !this.gridCell.edges.right;
-  }
-
-  toggleBottomEdge() {
-    this.gridCell.edges.bottom = !this.gridCell.edges.bottom;
-  }
-
-  toggleLeftEdge() {
-    this.gridCell.edges.left = !this.gridCell.edges.left;
-  }
-
   onKeyDown(event: KeyboardEvent) {
     if (this.gridCell.editable && event.ctrlKey) {
       event.preventDefault();
       switch (event.key) {
         case 'ArrowUp':
-          this.toggleTopEdge();
+          this.gridCell.toggleTopEdge();
           break;
         case 'ArrowRight':
-          this.toggleRightEdge();
+          this.gridCell.toggleRightEdge();
           break;
         case 'ArrowDown':
-          this.toggleBottomEdge();
+          this.gridCell.toggleBottomEdge();
           break;
         case 'ArrowLeft':
-          this.toggleLeftEdge();
+          this.gridCell.toggleLeftEdge();
           break;
         default:
           break;

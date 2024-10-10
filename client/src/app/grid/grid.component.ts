@@ -52,6 +52,30 @@ export class GridComponent {
    }
   }
 
+
+
+  boldAdjacent(event: KeyboardEvent, col: number, row: number)  {
+    if (event.ctrlKey) {
+      switch (event.key) {
+          case 'ArrowUp':
+            this.grid[col - 1][row].toggleLeftEdge();
+            break;
+          case 'ArrowDown':
+            this.grid[col - 1][row].toggleLeftEdge();
+            break;
+          case 'ArrowLeft':
+            this.grid[col - 1][row].toggleLeftEdge();
+            break;
+          case 'ArrowRight':
+            this.grid[col - 1][row].toggleLeftEdge();
+            break;
+            default:
+            break;
+  }
+    }
+  }
+
+
   onClick(event: MouseEvent, col: number, row: number) {
     this.moveFocus(col, row);
   }
@@ -61,30 +85,6 @@ export class GridComponent {
     const inputElement = this.elRef.nativeElement.querySelector(`app-grid-cell[data-col="${col}"][data-row="${row}"] input`);
 
     console.log('keydown', event.key, col, row);
-
-
-// BOLDING CELLS WALLS DEPENDING ON POSITION
-  // onCrtlKeyDown(event: KeyboardEvent, colIndex: number, rowIndex: number) {
-  //   if (event.ctrlKey) {
-  //     event.preventDefault();
-  //     switch (event.key) {
-  //       case 'ArrowUp':
-  //         this.(rowIndex, colIndex - 1).setBoldBottom()
-  //         break;
-  //       case 'ArrowRight':
-  //         this.(rowIndex + 1, colIndex).setBoldLeft()
-  //         break;
-  //       case 'ArrowDown':
-  //         this.(rowIndex, colIndex + 1).setBoldTop()
-  //         break;
-  //       case 'ArrowLeft':
-  //         this.(rowIndex - 1, colIndex).setBoldRight()
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //     }
-  //   }
 
     if (!event.ctrlKey) {
       switch (event.key) {
