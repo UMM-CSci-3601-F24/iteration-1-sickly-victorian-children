@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { GridComponent } from './grid.component';
 
@@ -17,7 +17,6 @@ describe('GridCellComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -45,29 +44,33 @@ describe('GridCellComponent', () => {
     expect(moveFocusSpy).toHaveBeenCalledWith(2, 3);
   });
 
-  it('should move focus on arrow key down', () => {
+  it('should move focus on arrow key down', fakeAsync(() => {
     const moveFocusSpy = spyOn(component, 'moveFocus');
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
-  });
+  }));
 
-  it('should move focus on arrow key up', () => {
+  it('should move focus on arrow key up', fakeAsync(() => {
     const moveFocusSpy = spyOn(component, 'moveFocus');
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowUp' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
-  });
+  }));
 
-  it('should move focus on arrow key left', () => {
+  it('should move focus on arrow key left', fakeAsync(() => {
     const moveFocusSpy = spyOn(component, 'moveFocus');
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowLeft' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
-  });
+  }));
 
-  it('should move focus on arrow key right', () => {
+  it('should move focus on arrow key right', fakeAsync(() => {
     const moveFocusSpy = spyOn(component, 'moveFocus');
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
-  });
+  }));
 
   it('should update currentRow and currentCol on moveFocus', () => {
     component.moveFocus(2, 3);
@@ -75,97 +78,99 @@ describe('GridCellComponent', () => {
     expect(component.currentRow).toBe(3);
   });
 
-it('should cycle typing direction correctly', () => {
-  const initialDirection = component.typeDirection;
-  component.cycleTypingDirection();
-  expect(component.typeDirection).not.toBe(initialDirection);
-  expect(component.typeDirection).toBe(component.typingDirections[1]);
+  it('should cycle typing direction correctly', () => {
+    const initialDirection = component.typeDirection;
+    component.cycleTypingDirection();
+    expect(component.typeDirection).not.toBe(initialDirection);
+    expect(component.typeDirection).toBe(component.typingDirections[1]);
 
-  component.cycleTypingDirection();
-  expect(component.typeDirection).toBe(component.typingDirections[2]);
+    component.cycleTypingDirection();
+    expect(component.typeDirection).toBe(component.typingDirections[2]);
 
-  component.cycleTypingDirection();
-  expect(component.typeDirection).toBe(component.typingDirections[3]);
+    component.cycleTypingDirection();
+    expect(component.typeDirection).toBe(component.typingDirections[3]);
 
-  component.cycleTypingDirection();
-  expect(component.typeDirection).toBe(component.typingDirections[0]);
-});
+    component.cycleTypingDirection();
+    expect(component.typeDirection).toBe(component.typingDirections[0]);
+  });
 
-    it('should handle keydown events correctly', () => {
+  it('should handle keydown events correctly', fakeAsync(() => {
     const moveFocusSpy = spyOn(component, 'moveFocus');
     const cell = component.grid[1][1];
     const inputElement = document.createElement('input');
     spyOn(component.elRef.nativeElement, 'querySelector').and.returnValue(inputElement);
 
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowUp' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
 
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
 
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowLeft' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
 
     component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }), 1, 1);
+    tick(100);
     expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
 
     component.typeDirection = 'right';
     component.onKeydown(new KeyboardEvent('keydown', { key: 'a' }), 1, 1);
+    tick(100);
     expect(cell.value).toBe('a');
-    setTimeout(() => {
-        expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
-    }, 0);
+    expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
 
     component.typeDirection = 'left';
     component.onKeydown(new KeyboardEvent('keydown', { key: 'a' }), 1, 1);
+    tick(100);
     expect(cell.value).toBe('a');
-    setTimeout(() => {
-        expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
-    }, 0);
+    expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
 
     component.typeDirection = 'up';
     component.onKeydown(new KeyboardEvent('keydown', { key: 'a' }), 1, 1);
+    tick(100)
     expect(cell.value).toBe('a');
-    setTimeout(() => {
-        expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
-    }, 0);
+    expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
 
     component.typeDirection = 'down';
     component.onKeydown(new KeyboardEvent('keydown', { key: 'a' }), 1, 1);
+    tick(100);
     expect(cell.value).toBe('a');
-    setTimeout(() => {
-        expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
-    }, 0);
+    expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
+  }));
 
-    });
+  it('should handle backspace correctly', fakeAsync(() => {
+    const moveFocusSpy = spyOn(component, 'moveFocus');
+    const cell = component.grid[1][1];
+    const inputElement = document.createElement('input');
+    spyOn(component.elRef.nativeElement, 'querySelector').and.returnValue(inputElement);
 
-    it('should handle backspace corrently', () => {
-        const moveFocusSpy = spyOn(component, 'moveFocus');
-        const cell = component.grid[1][1];
-        const inputElement = document.createElement('input');
-        spyOn(component.elRef.nativeElement, 'querySelector').and.returnValue(inputElement);
+    component.typeDirection = 'right';
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
+    tick(100);
+    expect(cell.value).toBe('');
+    expect(inputElement.value).toBe('');
+    expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
 
-        component.typeDirection = 'right';
-        component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
-        expect(cell.value).toBe('');
-        expect(inputElement.value).toBe('');
-        expect(moveFocusSpy).toHaveBeenCalledWith(0, 1);
+    component.typeDirection = 'left';
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
+    tick(100);
+    expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
 
+    component.typeDirection = 'up';
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
+    tick(100)
+    expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
 
-        component.typeDirection = 'left';
-        component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
-        expect(moveFocusSpy).toHaveBeenCalledWith(2, 1);
+    component.typeDirection = 'down';
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
+    tick(100);
+    expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
 
-        component.typeDirection = 'up';
-        component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
-        expect(moveFocusSpy).toHaveBeenCalledWith(1, 2);
-
-        component.typeDirection = 'down';
-        component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace' }), 1, 1);
-        expect(moveFocusSpy).toHaveBeenCalledWith(1, 0);
-
-        component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace', ctrlKey: true }), 1, 1);
-        setTimeout(() => {}, 0);
-        expect(cell.value).toBe('');
-    })
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'Backspace', ctrlKey: true }), 1, 1);
+    tick(100);
+    expect(cell.value).toBe('');
+  }));
 });

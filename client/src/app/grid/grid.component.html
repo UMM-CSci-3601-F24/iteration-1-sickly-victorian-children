@@ -1,22 +1,26 @@
-
-
 <input matInput
   [(ngModel)]="n"
   type="number"
   (input)="onSizeInput()"
   placeholder="{{n}}">
-  <div [ngStyle]="{'height': (n * 40) + 'px', 'width': (n * 40) + 'px'}"  >
+  <input matInput
+  [(ngModel)]="m"
+  type="number"
+  placeholder="{{m}}">
+
+  <div [ngStyle]="{'height': (n * m) + 'px', 'width': (n * m) + 'px'}"  >
     <mat-grid-list cols="{{n}}" rowHeight="1:1" gutterSize="0">
-      @for (col of grid; track col; let colIndex = $index) {
-        @for (cell of col; track cell; ; let rowIndex = $index) {
+      @for (row of grid; track row; let rowIndex = $index) {
+        @for (cell of row; track cell; ; let colIndex = $index) {
           <mat-grid-tile Rowspan="1" Colspan="1" >
             <app-grid-cell
             tabindex= "0"
             [gridCell]= ""
-            (keydown)= "onKeydown($event, currentRow, currentCol)"
-            (click)="onClick($event, rowIndex, colIndex)"
-            [attr.data-col]="rowIndex"
-            [attr.data-row]="colIndex"
+            (keydown)= "onKeydown($event, currentCol, currentRow)"
+            (click)="onClick($event, colIndex, rowIndex)"
+            [attr.data-col]="colIndex"
+            [attr.data-row]="rowIndex"
+            [ngStyle]="{'height': m + 'px', 'width': m + 'px'}"
             ></app-grid-cell>
           </mat-grid-tile>
         }
@@ -26,7 +30,3 @@
 
 <button mat-button (click)="cycleTypingDirection()">Cycle Typing Direction</button>
 <p>Current Typing Direction is {{typeDirection}}</p>
-
-
-
-
