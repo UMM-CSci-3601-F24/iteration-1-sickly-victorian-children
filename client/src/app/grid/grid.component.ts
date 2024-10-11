@@ -66,18 +66,25 @@ export class GridComponent {
 
   boldAdjacent(edge: string, col: number, row: number)  {
     switch(edge) {
-      // case 'top':
-      //   this.grid[col - 1][row].toggleLeftEdge();
-      //   break;
-      // case 'bottom':
-      //   this.grid[col - 1][row].toggleLeftEdge();
-      //   break;
-      // case 'left':
-      //   this.grid[col - 1][row].toggleLeftEdge();
-      //   break;
+      case 'top':
+        if (this.grid[col][row - 1]) {
+          this.grid[col][row - 1].toggleBottomEdge();
+        }
+        break;
+      case 'bottom':
+        if (this.grid[col][row + 1]) {
+          this.grid[col][row + 1].toggleTopEdge();
+        }
+        break;
+      case 'left':
+        if (this.grid[col - 1][row]) {
+          this.grid[col - 1][row].toggleRightEdge();
+        }
+        break;
       case 'right':
-        this.grid[col + 1][row].toggleLeftEdge();
-        console.log(this.grid[col + 1][row]);
+        if (this.grid[col + 1][row]) {
+          this.grid[col + 1][row].toggleLeftEdge();
+        }
         break;
       }
     }
@@ -175,9 +182,23 @@ export class GridComponent {
               setTimeout(() => this.moveFocus(col, row), 0);
               console.log(inputElement.value);
             }
+            break;
+            case 'ArrowUp': {
+              this.boldAdjacent('top', col, row)
+            }
+            break;
+            case 'ArrowDown': {
+              this.boldAdjacent('bottom', col, row)
+            }
+            break;
+            case 'ArrowLeft': {
+              this.boldAdjacent('left', col, row)
+            }
+            break;
             case 'ArrowRight': {
               this.boldAdjacent('right', col, row)
             }
+            break;
         }
       }
     }, );

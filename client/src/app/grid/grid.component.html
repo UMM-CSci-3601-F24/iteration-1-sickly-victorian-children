@@ -15,7 +15,7 @@
           <mat-grid-tile Rowspan="1" Colspan="1" >
             <app-grid-cell
             tabindex= "0"
-            [gridCell]= ""
+            [gridCell]= "grid[colIndex][rowIndex]"
             (keydown)= "onKeydown($event, currentCol, currentRow)"
             (click)="onClick($event, colIndex, rowIndex)"
             [attr.data-col]="colIndex"

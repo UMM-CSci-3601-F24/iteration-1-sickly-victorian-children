@@ -173,4 +173,57 @@ describe('GridCellComponent', () => {
     tick(100);
     expect(cell.value).toBe('');
   }));
+
+  it('should bold adjacent cells on arrow key with ctrl key', fakeAsync(() => {
+    const boldAdjacentSpy = spyOn(component, 'boldAdjacent');
+    const inputElement = document.createElement('input');
+    spyOn(component.elRef.nativeElement, 'querySelector').and.returnValue(inputElement);
+
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowUp', ctrlKey: true }), 1, 1);
+    tick(100);
+    expect(boldAdjacentSpy).toHaveBeenCalledWith('top', 1, 1);
+
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowDown', ctrlKey: true }), 1, 1);
+    tick(100);
+    expect(boldAdjacentSpy).toHaveBeenCalledWith('bottom', 1, 1);
+
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowLeft', ctrlKey: true }), 1, 1);
+    tick(100);
+    expect(boldAdjacentSpy).toHaveBeenCalledWith('left', 1, 1);
+
+    component.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight', ctrlKey: true }), 1, 1);
+    tick(100);
+    expect(boldAdjacentSpy).toHaveBeenCalledWith('right', 1, 1);
+  }));
+
+  it('should bold the top adjacent cell', () => {
+    component.initializeGrid();
+    const toggleBottomEdgeSpy = spyOn(component.grid[1][0], 'toggleBottomEdge');
+    component.boldAdjacent('top', 1, 1);
+    expect(toggleBottomEdgeSpy).toHaveBeenCalled();
+  });
+
+  it('should bold the bottom adjacent cell', () => {
+    component.initializeGrid();
+    const toggleTopEdgeSpy = spyOn(component.grid[1][2], 'toggleTopEdge');
+    component.boldAdjacent('bottom', 1, 1);
+    expect(toggleTopEdgeSpy).toHaveBeenCalled();
+  });
+
+  it('should bold the left adjacent cell', () => {
+    component.initializeGrid();
+    const toggleRightEdgeSpy = spyOn(component.grid[0][1], 'toggleRightEdge');
+    component.boldAdjacent('left', 1, 1);
+    expect(toggleRightEdgeSpy).toHaveBeenCalled();
+  });
+
+  it('should bold the right adjacent cell', () => {
+    component.initializeGrid();
+    const toggleLeftEdgeSpy = spyOn(component.grid[2][1], 'toggleLeftEdge');
+    component.boldAdjacent('right', 1, 1);
+    expect(toggleLeftEdgeSpy).toHaveBeenCalled();
+  });
+
+
+
 });
